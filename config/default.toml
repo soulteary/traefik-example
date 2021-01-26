@@ -1,0 +1,19 @@
+[http.middlewares.gzip.compress]
+[http.middlewares.content-compress.compress]
+
+# tricks
+# https://github.com/containous/traefik/issues/4863#issuecomment-491093096
+[http.services]
+  [http.services.noop.LoadBalancer]
+     [[http.services.noop.LoadBalancer.servers]]
+        url = "" # or url = "localhost"
+
+[http.routers]
+  [http.routers.https-redirect]
+    entryPoints = ["http"]
+    rule = "HostRegexp(`{any:.*}`)"
+    middlewares = ["https-redirect"]
+    service = "noop"
+
+[http.middlewares.https-redirect.redirectScheme]
+  scheme = "https"

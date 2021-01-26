@@ -1,0 +1,26 @@
+[tls]
+
+  [tls.options]
+    [tls.options.default]
+      minVersion = "VersionTLS12"
+      maxVersion = "VersionTLS12"
+    [tls.options.test-tls13]
+      minVersion = "VersionTLS13"
+      cipherSuites = [
+        "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
+        "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
+        "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305",
+        "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305",
+        "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256",
+        "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
+      ]
+
+    [tls.stores]
+        [tls.stores.default]
+            [tls.stores.default.defaultCertificate]
+            certFile = "/data/ssl/example.com.crt"
+            keyFile = "/data/ssl/example.com.key"
+
+  [[tls.certificates]]
+    certFile = "/data/ssl/example.com.crt"
+    keyFile = "/data/ssl/example.com.key"
