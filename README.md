@@ -16,6 +16,12 @@ Then create a self-signed certificate:
 bash scripts/generate-certs.sh
 ```
 
+If you want to generate multiple certificates or configure more complex DNS domain name configuration, you can use this tool: [certs-maker](https://github.com/soulteary/certs-maker), usage:
+
+```bash
+docker run --rm -it -e CERT_DNS=a.com\;\*.domain.com\;a.c.com -v `pwd`/certs:/ssl soulteary/certs-maker
+```
+
 Finally bind the domain name to the local, open the browser to visit the website:
 
 ```bash
