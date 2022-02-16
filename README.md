@@ -3,6 +3,7 @@
 本项目旨在演示如何快速上手 Traefik：包含服务动态接入、配置证书。
 ## 如何配置和启动 Traefik
 
+ 这个小节将展示如何启动一个最基础的 Traefik 示例，配置具体的内容你并不需要过多了解，建议先跑起来再说 :)
 ### 第一步：创建容器虚拟网卡
 
 首先使用创建一个 Traefik 和它服务的相关应用使用的网卡，我们约定在这个网卡上的应用，将能够被进行服务发现和自动注册到 traefik 上。
@@ -44,6 +45,10 @@ echo "127.0.0.1 dashboard.example.com">>/etc/hosts
 ### 第四步：启动 Traefik 应用
 
 接着使用 `docker-compose up -d` 启动服务，稍等片刻，在浏览器中打开刚刚绑定到域名，就能开始你的 Traefik 之旅啦。
+
+![](./screenshots/traefik.png)
+
+当然，因为我们使用的是自签名证书，所以在浏览器中打开网站的时候，会提示安全风险。这里推荐进行自签名证书信任，当然，你也可以选择购买网络服务商的证书，或者使用 Let's Encrypt 签发的证书。（另外一个示例，可以参考这里  https://suyang.wiki/runbook/traefik/issue-certs.html ）
 
 ## 如何进行服务动态接入
 
