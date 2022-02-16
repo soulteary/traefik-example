@@ -1,37 +1,59 @@
-# Traefik Example
+# Traefik 快速上手示例
 
-Simple way to use Traefik.
+本项目旨在演示如何快速上手 Traefik：包含服务动态接入、配置证书。
+## 如何配置和启动 Traefik
 
-## Guide
+### 第一步：创建容器虚拟网卡
 
-Create the docker network first:
+首先使用创建一个 Traefik 和它服务的相关应用使用的网卡，我们约定在这个网卡上的应用，将能够被进行服务发现和自动注册到 traefik 上。
 
 ```bash
 bash scripts/prepare-network.sh
 ```
 
-Then create a self-signed certificate:
+### 第二步：生成必要的证书
+
+接着生成我们所需要的证书，这里有两个选择，第一种使用容器来进行生成：
+
+```bash
+docker-compose -f docker-compose.make-cert.yml up
+```
+
+第二种则是直接使用命令（需要本地安装 openssl）：
 
 ```bash
 bash scripts/generate-certs.sh
 ```
 
-If you want to generate multiple certificates or configure more complex DNS domain name configuration, you can use this tool: [certs-maker](https://github.com/soulteary/certs-maker), usage:
+如果你希望生成多个不同的泛解析域名，或者想获得一些复杂的域名 DNS 组合，可以使用这个工具 [certs-maker](https://github.com/soulteary/certs-maker)，它的命令行使用示例：
 
 ```bash
 docker run --rm -it -e CERT_DNS=a.com\;\*.domain.com\;a.c.com -v `pwd`/certs:/ssl soulteary/certs-maker
 ```
 
-Finally bind the domain name to the local, open the browser to visit the website:
+### 第三步：绑定域名到合适的机器上
+
+如果你是在本地启动 Traefik，可以使用下面的方式，将某个域名绑定到本地。
 
 ```bash
-echo "dashboard.example.com">>/etc/hosts
+echo "127.0.0.1 dashboard.example.com">>/etc/hosts
 ```
 
-## Customize Domain and Certs
+或者使用 DNS 服务器（Homelab 或者公网都可以）指定到某台远程服务器上。
 
-You can customize domain name and certs by yourself, just replace `example.com` in those files:
+### 第四步：启动 Traefik 应用
+
+接着使用 `docker-compose up -d` 启动服务，稍等片刻，在浏览器中打开刚刚绑定到域名，就能开始你的 Traefik 之旅啦。
+
+## 如何进行服务动态接入
+
+TBD
+## 如何调整服务域名
+
+相信你一定希望能够使用自己的域名来运行服务。
+
+你可以在下面的文件中，将 `example.com` 替换为你想要的域名，然后重启服务就可以了。
 
 - docker-compose.yml
-- scripts/generate-certs.sh
-- config/tls.toml
+- config/tls.toml（注意保持路径和文件名正确）
+- scripts/generate-certs.sh （如果没有使用脚本生成证书，则可以忽略）
