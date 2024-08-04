@@ -1,5 +1,7 @@
 # Traefik 快速上手示例
 
+**如果你在寻找 3.x 版本示例，可以访问 [soulteary/traefik-v3-example](https://github.com/soulteary/traefik-v3-example)**
+
 本项目旨在演示如何快速上手 Traefik：包含服务动态接入、配置证书。
 
 如果你觉得这个例子有帮到你，欢迎点赞✨（star），如果你希望收到这个项目的更新推送，可以点击关注 👀（watch）并选择适合自己的关注模式。
