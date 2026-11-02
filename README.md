@@ -61,14 +61,18 @@ echo "127.0.0.1 dashboard.example.com">>/etc/hosts
 
 ### 第一步：观察和分析需要接入的应用
 
-这里以另外一个项目 https://github.com/soulteary/docker-flare 为例。
+这里以另外一个项目 https://github.com/soulteary/docker-flare 为例。当前示例固定已发布的 Flare 0.6.13。
+
+从旧示例 0.2.5 升级前，停止实例并备份整个 app 目录（含隐藏文件）、Compose 及外部配置；阅读 [0.6.8 安全状态迁移](https://github.com/soulteary/docker-flare/blob/main/docs/upgrade-0.6.8.md)、[0.6.9 默认访问行为](https://github.com/soulteary/docker-flare/blob/main/docs/upgrade-0.6.9.md)和 [0.6.13 升级说明](https://github.com/soulteary/docker-flare/blob/main/docs/upgrade-0.6.13.md)。新镜像默认公开且免登录，能访问实例的人可浏览和编辑；接入公网前按 [登录/私有示例](https://github.com/soulteary/docker-flare/tree/main/example)设置保护。已有私有部署保留原访问模式和凭据，不要用本文默认示例覆盖原配置。
+
+完整持久化 `./app:/app`，保留 `.flare-security/`；升级后验证匿名访问边界、登录、设置保存及容器重建。回退须使用旧镜像和对应完整备份，旧版可能不执行当前逐项隐私控制。
 
 ```yml
 version: '3.6'
 
 services:
   flare:
-    image: soulteary/flare:0.2.5
+    image: soulteary/flare:0.6.13
     restart: always
     # 默认无需添加任何参数，如有特殊需求
     # 可阅读文档 https://github.com/soulteary/docker-flare/blob/main/docs/advanced-startup.md
@@ -93,7 +97,7 @@ version: '3.6'
 
 services:
   flare:
-    image: soulteary/flare:0.2.5
+    image: soulteary/flare:0.6.13
     restart: always
     # 默认无需添加任何参数，如有特殊需求
     # 可阅读文档 https://github.com/soulteary/docker-flare/blob/main/docs/advanced-startup.md
@@ -118,9 +122,9 @@ services:
       - traefik
     expose:
       - 5005
-    # 仅作为示例，无需映射作数据持久化 :) 
-    # volumes:
-      # - ./app:/app
+    # 同时持久化 YAML、隐藏安全状态及备份；不要只挂载三个 YAML 文件。
+    volumes:
+      - ./app:/app
 
 networks:
   traefik:
