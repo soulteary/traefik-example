@@ -2,7 +2,7 @@ version: '3.6'
 
 services:
   flare:
-    image: soulteary/flare:0.2.5
+    image: soulteary/flare:0.6.13
     restart: always
     # 默认无需添加任何参数，如有特殊需求
     # 可阅读文档 https://github.com/soulteary/docker-flare/blob/main/docs/advanced-startup.md
@@ -26,9 +26,9 @@ services:
       - traefik
     expose:
       - 5005
-    # 仅作为示例，无需映射作数据持久化 :) 
-    # volumes:
-      # - ./app:/app
+    # 同时持久化 YAML、隐藏安全状态及备份；不要只挂载三个 YAML 文件。
+    volumes:
+      - ./app:/app
 
 networks:
   traefik:
