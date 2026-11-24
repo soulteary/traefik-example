@@ -72,7 +72,7 @@ version: '3.6'
 
 services:
   flare:
-    image: soulteary/flare:0.6.13
+    image: soulteary/flare:0.6.15
     restart: always
     # 默认无需添加任何参数，如有特殊需求
     # 可阅读文档 https://github.com/soulteary/docker-flare/blob/main/docs/advanced-startup.md
@@ -97,7 +97,7 @@ version: '3.6'
 
 services:
   flare:
-    image: soulteary/flare:0.6.13
+    image: soulteary/flare:0.6.15
     restart: always
     # 默认无需添加任何参数，如有特殊需求
     # 可阅读文档 https://github.com/soulteary/docker-flare/blob/main/docs/advanced-startup.md

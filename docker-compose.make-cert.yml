@@ -3,7 +3,7 @@ version: '2'
 services:
 
   certs-maker:
-    image: soulteary/certs-maker
+    image: soulteary/certs-maker:v3.8.2
     environment:
       - CERT_DNS=example.com;*.example.com;
     volumes:
